@@ -1,5 +1,6 @@
 package ohm.softa.a07.controllers;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 import ohm.softa.a07.model.Meal;
 
 import java.net.URL;
@@ -21,27 +23,36 @@ public class MainController implements Initializable {
 	private Button btnRefresh;
 
 	@FXML
-	private ListView<String> mealsList;
+	private ListView<Meal> mealsList;
+
+	//@FXML
+	//private ListView<Meal> listView;
+	private ObservableList<Meal> meals;
 
 	@FXML
-	private ListView<Meal> listView;
-	private ObservableList<Meal> observableList;
-
-	@FXML
-	private Button close;
+	private Button btnClose;
 
 	@FXML
 	private CheckBox vegetarian;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		meals = mealsList.getItems();
+
 		// set the event handler (callback)
 		btnRefresh.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				// create a new (observable) list and tie it to the view
+				// ObservableList<String> list = FXCollections.observableArrayList("Hans", "Dampf");
 				ObservableList<String> list = FXCollections.observableArrayList("Hans", "Dampf");
 				mealsList.setItems(list);
+			}
+		});
+		btnClose.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				Platform.exit();
 			}
 		});
 	}
